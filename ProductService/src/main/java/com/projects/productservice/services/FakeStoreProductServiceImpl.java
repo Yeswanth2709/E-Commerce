@@ -34,13 +34,13 @@ public class FakeStoreProductServiceImpl implements ProductService {
         return products;
     }
     @Override
-    public Product createProduct(String title, String description, double price, String image, String category) {
+    public Product createProduct(String title, String description, double price, String image, String categoryName) {
         FakeStoreProductDto productDto=new FakeStoreProductDto();
         productDto.setTitle(title);
         productDto.setDescription(description);
         productDto.setPrice(price);
         productDto.setImage(image);
-        productDto.setCategory(category);
+        productDto.setCategory(categoryName);
         FakeStoreProductDto newProductDto = fakeStoreApiClient.createProduct(productDto);
         return ProductUtils.convertDtotoProduct(newProductDto);
     }
@@ -65,12 +65,12 @@ public class FakeStoreProductServiceImpl implements ProductService {
         return ProductUtils.convertDtotoProduct(newProductDto);
     }
     @Override
-    public Product deleteProduct(long productId) throws ProductNotFoundException {
+    public void deleteProduct(long productId) throws ProductNotFoundException {
         FakeStoreProductDto deletedProductDto = fakeStoreApiClient.deleteProduct(productId);
         if(deletedProductDto==null){
             throw new ProductNotFoundException("Product Id Not Found");
         }
-        return ProductUtils.convertDtotoProduct(deletedProductDto);
+
     }
 
 }
